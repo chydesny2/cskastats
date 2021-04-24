@@ -1,0 +1,95 @@
+package eurostat.controllers;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import eurostat.dao.PlayerStatDate;
+import eurostat.dto.GameConvertedRepository;
+import eurostat.dto.PlayerStatDateRepository;
+import eurostat.entities.GameConverted;
+import eurostat.services.GameDataService;
+import eurostat.services.PlayerStatDateService;
+
+@Controller
+@RequestMapping("")
+public class PlayersController {	
+	
+	public PlayerStatDate infoCommited;
+	public GameConverted gc = new GameConverted();
+	
+	@Autowired
+	public GameDataService gameDataService;
+	
+	@Autowired
+	public PlayerStatDateService playerStatDateService;
+	
+	//username
+	String userName = null;
+	
+	@GetMapping("")
+	public String showPlayers(Model model) {
+		addFormContainer(model);
+		return "dashboard/index";
+	}
+	
+	@PostMapping("/playercommit")
+	public String commitPlayers(@Valid PlayerStatDate playerStatDate, Errors errors) {
+		if (errors.hasErrors()) {
+			return "redirect:/";
+		}
+		infoCommited = playerStatDate;
+		infoCommited.setPlayers(PlayerStatDate.toJString(infoCommited.getNames()));
+		infoCommited = playerStatDateService.save(infoCommited);
+		return "redirect:/getscore";
+	}
+	
+
+	
+	@SuppressWarnings("deprecation")
+	@GetMapping("/getscore")
+	public String score(Model model) throws JsonProcessingException, NoSuchMethodException, SecurityException, 
+	IllegalAccessException, IllegalArgumentException, InvocationTargetException 
+	{						
+					//adding the requested data to the view model
+					gameDataService.prepareData(model, infoCommited);					
+					//adding the wrap-up container to the model so the user could input another values
+					addFormContainer(model);					
+					//sending to the model the interpreted selected column name so to show it on the js plot
+					model.addAttribute("statsName", infoCommited.interpretSelectedColumn());	
+					return "dashboard/index2";
+	}
+	
+	
+	@PostMapping("/statsfromdbcommit")
+	public String commitStatsFromDb(PlayerStatDate playerStatDate) {
+		infoCommited = playerStatDateService.findByPlayerStatDateId(playerStatDate.getPlayerStatDateId());
+		infoCommited.setNames(PlayerStatDate.toList(infoCommited.getPlayers()));
+		return "redirect:/getscore";
+	}
+	
+	//transforms the string into the right format to be delivered to js
+
+	
+	public void addFormContainer(Model model) {
+		model.addAttribute("glist", gameDataService.findAllAscDate());
+		model.addAttribute("PlayerStatDate", new PlayerStatDate());
+		List<PlayerStatDate> usslist = playerStatDateService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("usslist", usslist);
+	}
+
+}

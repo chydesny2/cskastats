@@ -1,0 +1,5 @@
+package eurostat.dto;
+
+public interface PlayerStatDateRepository {
+
+}

@@ -1,0 +1,15 @@
+package eurostat.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import eurostat.dto.AuthorityRepository;
+import eurostat.entities.Authority;
+
+public class AuthService {
+	@Autowired
+	AuthorityRepository AuthRepo;
+	
+	public void save(Authority authority) {
+		AuthRepo.save(authority);
+	}
+}

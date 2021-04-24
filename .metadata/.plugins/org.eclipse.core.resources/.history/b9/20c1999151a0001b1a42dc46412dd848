@@ -1,0 +1,144 @@
+//package eurostat.entities;
+//
+//
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+//import javax.persistence.SequenceGenerator;
+//import javax.persistence.Table;
+//
+//
+//import eurostat.dao.PlayerStatDate;
+//
+//@Entity
+//@Table(name = "userstatsets")
+//public class UserStatSet implements TimeFramed{
+//	
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="userstatsets_generator")
+//	@SequenceGenerator(name="userstatsets_generator", sequenceName = "userstatsets_seq", allocationSize = 1)
+//	@Column(name = "userstatset_id")
+//	private long userStatSetId;
+//	@Column(name="userstatset_name")
+//	private String userStatSetName;
+//	private String players;
+//	@Column(name="column_name")
+//	private String column;
+//	private int fromDate;
+//	private int toDate;
+//	private boolean showAverage;
+//	private String userName;
+//	
+//	
+//	
+//	
+//	
+//	public String getUserName() {
+//		return userName;
+//	}
+//	public void setUserName(String userName) {
+//		this.userName = userName;
+//	}
+//	public UserStatSet() {
+//	}
+//	public UserStatSet(String userStatSetName, String players, String column, int fromDate, int toDate,
+//			boolean showAverage) {
+//		this.userStatSetName = userStatSetName;
+//		this.players = players;
+//		this.column = column;
+//		this.fromDate = fromDate;
+//		this.toDate = toDate;
+//		this.showAverage = showAverage;
+//	}
+//	public long getUserStatSetId() {
+//		return userStatSetId;
+//	}
+//	public void setUserStatSetId(long userStatSetId) {
+//		this.userStatSetId = userStatSetId;
+//	}
+//	public String getUserStatSetName() {
+//		return userStatSetName;
+//	}
+//	public void setUserStatSetName(String userStatSetName) {
+//		this.userStatSetName = userStatSetName;
+//	}
+//	public String getPlayers() {
+//		return players;
+//	}
+//	public void setPlayers(String players) {
+//		this.players = players;
+//	}
+//	public String getColumn() {
+//		return column;
+//	}
+//	public void setColumn(String column) {
+//		this.column = column;
+//	}
+//	public int getFromDate() {
+//		return fromDate;
+//	}
+//	public void setFromDate(int fromDate) {
+//		this.fromDate = fromDate;
+//	}
+//	public int getToDate() {
+//		return toDate;
+//	}
+//	public void setToDate(int toDate) {
+//		this.toDate = toDate;
+//	}
+//	public boolean isShowAverage() {
+//		return showAverage;
+//	}
+//	public void setShowAverage(boolean showAverage) {
+//		this.showAverage = showAverage;
+//	}
+//	
+//	public UserStatSet(PlayerStatDate playerStatDate) {
+//		this.userStatSetName = playerStatDate.getUserStatSetName();
+//		this.players = playerStatDate.toString();
+//		this.column = playerStatDate.getColumn();
+//		this.fromDate = playerStatDate.getFromDate();
+//		this.toDate = playerStatDate.getToDate();
+//		this.showAverage = playerStatDate.isShowAverage();
+//		this.userName = playerStatDate.getUserName();
+//	}
+//	
+//	@Override
+//	public String toString() {
+//		return players;
+//		
+//	}
+//	
+//	public String interpretSelectedColumn() {
+//		String stats = "";
+//		switch (this.getColumn()) 
+//		{
+//			case "getTimePlayed": stats = "Сыгранное время"; break;
+//			case "getScore": stats = "Очки"; break;
+//			case "getShots2": stats = "2-очковые броски"; break;
+//			case "getScored2": stats = "2-очковые в цель"; break;
+//			case "getShots3": stats = "3-очковые броски"; break;
+//			case "getScored3": stats = "3-очковые в цель"; break;
+//			case "getShots1": stats = "Штрафных бросил"; break;
+//			case "getScored1": stats = "Штрафных забил"; break;
+//			case "getReboundsDefensive": stats = "Подборы в защите"; break;
+//			case "getReboundsOffensive": stats = "Подборы в нападении"; break;
+//			case "getRebounds": stats = "Подборы всего"; break;
+//			case "getPasses": stats = "Голевые пасы"; break;
+//			case "getInterceptions": stats = "Перехваты"; break;
+//			case "getTurnovers": stats = "Потери"; break;
+//			case "getBlocks": stats = "Блокшоты"; break;
+//			case "getBlocked": stats = "Блокшотов получено"; break;
+//			case "getFouls": stats = "Фолы"; break;
+//			case "getFouled": stats = "Заработал фолов"; break;
+//			case "getIndex": stats = "Индекс полезности";  break;
+//			case "getShots2Accuracy": stats = "Точность двухочковых";  break;	
+//			case "getShots3Accuracy": stats = "Точность трёхочковых";  break;
+//			case "getShots1Accuracy": stats = "Точность штрафных"; break;
+//		}
+//		return stats;
+//	}
+//	
+//}

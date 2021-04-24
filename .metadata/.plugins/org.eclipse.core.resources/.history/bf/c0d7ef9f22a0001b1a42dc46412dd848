@@ -1,0 +1,155 @@
+package eurostat.controllers;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import eurostat.dao.GameConvertedRepository;
+import eurostat.dao.PlayerStatDate;
+import eurostat.dto.PlayerStatDateRepository;
+import eurostat.entities.GameConverted;
+
+@Controller
+@RequestMapping("")
+public class PlayersController {	
+	
+	public PlayerStatDate infoCommited;
+	public GameConverted gc = new GameConverted();
+	
+	@Autowired
+	public GameConvertedRepository GRepo;
+	
+	@Autowired
+	public PlayerStatDateRepository PRepo;
+	
+	//username
+	String userName = null;
+	
+	@GetMapping("")
+	public String showPlayers(Model model) {
+		List<GameConverted> glist = GRepo.findAll(Sort.by(Sort.Direction.ASC, "gameDate"));
+		model.addAttribute("glist", glist);
+		model.addAttribute("PlayerStatDate", new PlayerStatDate());
+		List<PlayerStatDate> usslist = PRepo.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("usslist", usslist);
+		return "dashboard/index";
+	}
+	
+	@PostMapping("/playercommit")
+	public String commitPlayers(@Valid PlayerStatDate playerStatDate, Errors errors) {
+		if (errors.hasErrors()) {
+			return "redirect:/";
+		}
+		infoCommited = playerStatDate;
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		infoCommited.setUserName(loggedInUser.getName());
+		if ((infoCommited.getPlayerStatDateName().length() > 0) && (!infoCommited.getUserName().equals("anonymousUser"))) {
+			infoCommited.setPlayers(PlayerStatDate.toJString(infoCommited.getNames()));
+			PRepo.save(infoCommited);
+		}
+		return "redirect:/getscore";
+	}
+	
+
+	
+	@SuppressWarnings("deprecation")
+	@GetMapping("/getscore")
+	public String score(Model model) throws JsonProcessingException, NoSuchMethodException, SecurityException, 
+	IllegalAccessException, IllegalArgumentException, InvocationTargetException 
+	{
+
+					List<GameConverted> allDB = GRepo.findAll(Sort.by(Sort.Direction.ASC, "gameDate"));
+					
+					//declaring Lists that contain a list of scores or a number of records for each player:
+					List<List<String>> datesList = new ArrayList<>();
+					List<List<Integer>> statsList = new ArrayList<>();
+					List<List<Integer>> countList = new ArrayList<>();
+					
+					//setting the date format that is gonna be delivered to the js code
+				    SimpleDateFormat targetDateFormat = new SimpleDateFormat("yyyy-MM-dd");		
+				    
+				    //adds the list of players to the model (gonna be delivered to the js code)
+					model.addAttribute("playersCommited", infoCommited.getPlayers());
+					
+					
+					//searching through all the records that contain a specific name 
+					for (String name : infoCommited.getNames()) {
+						//declaring a list of values for the player
+						List<Integer> singleIntegerList = new ArrayList<>();
+						List<String> singleDateList = new ArrayList<>();
+						List<Integer> singleCountList = new ArrayList<>();
+						//declaring the count of records for the player to count the average later
+						int count = 0;
+						for (GameConverted gc : allDB) {
+							//if the record has the name of the player and falls in the selected timeframe
+							if (gc.getPlayerName().equals(name) && (gc.isInTheTimeframe(infoCommited))) {								
+										//incrementing the number of records using the method that takes in the name of the column we count the records for
+										count += gc.getCount(infoCommited.getColumn());
+										singleCountList.add(count);
+										//taking the name of the column and searching for the respective method returning its value....
+										Method method = GameConverted.class.getMethod(infoCommited.getColumn());
+										//...and invoking this method, adding the result to the respective list of values for the player
+										singleIntegerList.add((int)method.invoke(gc));
+										//also adding to the player's gameDate list
+										singleDateList.add(targetDateFormat.format(gc.getGameDate()));
+							}
+						}
+						
+						//adding the count list of the player to the List of lists of counts of all the players selected
+						countList.add(singleCountList);
+						
+						//adding the list to the list of lists of all the players selected
+						statsList.add(singleIntegerList);
+						datesList.add(singleDateList);
+					}
+					model.addAttribute("datesList", toJsFormat(datesList.toString()));
+					model.addAttribute("statsList", toJsFormat(statsList.toString()));
+					model.addAttribute("showAverage", infoCommited.isShowAverage());
+					model.addAttribute("countList", toJsFormat(countList.toString()));					
+					
+					//adding to the model so the index doesn't throw a mistake
+					addFormContainer(model);
+					//^^^^
+					
+					//sends to the model the interpreted selected column name so to show it on the js plot
+					model.addAttribute("statsName", infoCommited.interpretSelectedColumn());
+					
+					
+					return "dashboard/index2";
+	}
+	
+	
+	@PostMapping("/statsfromdbcommit")
+	public String commitStatsFromDb(PlayerStatDate playerStatDate) {
+		infoCommited = PRepo.findByPlayerStatDateId(playerStatDate.getPlayerStatDateId());
+		infoCommited.setNames(PlayerStatDate.toList(infoCommited.getPlayers()));
+		return "redirect:/getscore";
+	}
+	
+	//transforms the string into the right format to be delivered to js
+	public static String toJsFormat(String input) {
+		return input.replaceAll("], ", "*").replaceAll("\\[\\[", "").replaceAll("\\]\\]", "").replaceAll("\\[", "");
+	}
+	
+	public void addFormContainer(Model model) {
+		List<GameConverted> glist = GRepo.findAll(Sort.by(Sort.Direction.ASC, "gameDate"));
+		model.addAttribute("glist", glist);
+		model.addAttribute("PlayerStatDate", new PlayerStatDate());
+		List<PlayerStatDate> usslist = PRepo.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("usslist", usslist);
+	}
+
+}

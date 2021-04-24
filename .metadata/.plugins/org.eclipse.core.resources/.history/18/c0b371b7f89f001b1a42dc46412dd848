@@ -1,0 +1,13 @@
+package eurostat.dto;
+
+import java.util.List;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import eurostat.dao.PlayerStatDate;
+
+public interface PlayerStatDateRepository extends PagingAndSortingRepository<PlayerStatDate, Long>{
+	public List<PlayerStatDate> findByUserName(String userName);
+	public PlayerStatDate findByPlayerStatDateId(long playerStatDateId);
+	
+}

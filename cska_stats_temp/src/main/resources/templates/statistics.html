@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts::header"></head>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+
+<body>
+
+<form th:action="@{/playercommit}" th:object="${PlayerStatDate}" method="POST">
+
+		<select th:field="${PlayerStatDate.names}" multiple="multiple">
+				<option th:each="p : ${glist}"
+						th:value="${p.playerName}"						
+						th:text="${p.playerName}">
+				</option>
+		</select>
+		
+				<hr>
+		Show statistics from date:
+		<div class="form-group row">
+		<input id="dp3" type="text" autocomplete="off" class="mb-4 col-2 col-xs-4" value="From Date" th:field="${PlayerStatDate.fromDate}">
+		</div>
+		
+		...to date:
+		<div class="form-group row">
+		<input id="dp4" type="text" autocomplete="off" class="mb-4 col-2 col-xs-4" value="To Date" th:field="${PlayerStatDate.toDate}">
+		</div>
+		
+		<div class="form-group row">	
+		<select id="column" name="column">
+			<option value="getTimePlayed">Сыгранное время</option>
+			<option value="getScore">Очки</option>
+			<option value="getShots2">2-очковые броски</option>
+			<option value="getScored2">2-очковые в цель</option>
+			<option value="getShots3">3-очковые броски</option>
+			<option value="getScored3">3-очковые в цель</option>
+			<option value="getShots1">Штрафных бросил</option>
+			<option value="getScored1">Штрафных забил</option>
+			<option value="getReboundsDefensive">Подборы в защите</option>
+			<option value="getReboundsOffensive">Подборы в нападении</option>
+			<option value="getRebounds">Подборы всего</option>
+			<option value="getPasses">Голевые пасы</option>
+			<option value="getInterceptions">Перехваты</option>
+			<option value="getTurnovers">Потери</option>
+			<option value="getBlocks">Блокшоты</option>
+			<option value="getBlocked">Блокшотов получено</option>
+			<option value="getFouls">Фолы</option>
+			<option value="getFouled">Заработал фолов</option>
+			<option value="getIndex">Индекс полезности</option>	
+			<option value="getShots2Accuracy">Точность двухочковых</option>	
+			<option value="getShots3Accuracy">Точность трёхочковых</option>		
+			<option value="getShots1Accuracy">Точность штрафных</option>					
+		</select>	
+		</div>
+		
+		<div class="form-group row">		
+			<input type="checkbox" checked data-toggle="toggle" th:field="*{showAverage}" data-size="xs">
+		</div>
+		
+		<div class="form-group row">		
+			<input type="text" th:field="*{userStatSetName}" />
+		</div>
+		<script type="text/javascript">
+		$('#dp3').datepicker();
+		$('#dp4').datepicker();
+		</script>
+		
+		
+		<button type="submit">Select the player</button>	
+			
+</form>
+
+
+<form th:action="@{/statsfromdbcommit}" th:object="${UserStatSet}" method="POST">
+
+		<select th:field="*{userStatSetId}">
+				<option th:each="uss : ${usslist}"
+						th:value="${uss.userStatSetId}"						
+						th:text="${uss.userStatSetName}">
+				</option>
+		</select>
+		<button type="submit">Select the stats from DB</button>	
+		
+</form>
+
+
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

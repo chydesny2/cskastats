@@ -1,0 +1,17 @@
+//package eurostat.dao;
+//
+//import java.util.List;
+//
+//import org.springframework.data.repository.PagingAndSortingRepository;
+//import org.springframework.stereotype.Repository;
+//
+//import eurostat.entities.UserStatSet;
+//
+//@Repository
+//public interface UserStatSetRepository extends PagingAndSortingRepository<UserStatSet, Long>{
+//	
+//	  public List<UserStatSet> findByUserName(String userName);
+//	  
+//	  public UserStatSet findByUserStatSetId(long userStatSetId);
+//
+//}

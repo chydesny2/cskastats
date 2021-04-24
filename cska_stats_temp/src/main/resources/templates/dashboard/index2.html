@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>Dashboard Template · Bootstrap v5.0</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+    	<link rel="stylesheet" th:href="@{/css/formatting.css}">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link th:href="@{/css/range.css}" rel="stylesheet" />
+
+
+    <!-- amcharts Library -->
+	<script src="//cdn.amcharts.com/lib/4/core.js"></script>
+	<script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+	<script src="//cdn.amcharts.com/lib/4/maps.js"></script>
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/dashboard.css}" rel="stylesheet">
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap px-0 py-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 py-0 my-0 px-0 mx-0" href="#"><img class="center" src="images/logo.png" alt="hui"></a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div id="logo">
+	  <ul class="navbar-nav px-3">
+	    <li class="nav-item text-nowrap">
+	    <div sec:authorize="isAnonymous()">
+	      	<a class="btn btn-primary btn-sm" th:href="@{/login}">Вход / Регистрация</a>
+	    </div>
+	    
+	    <div sec:authorize="isAuthenticated()">
+			<a class="btn btn-primary btn-sm" th:href="@{/logout}">Выход</a>
+	    </div>    </li>
+	  </ul>
+  </div>
+  </div> 
+</header>
+
+<div class="container-fluid">
+
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-1">
+       <form th:action="@{/playercommit}" th:object="${PlayerStatDate}" method="POST">
+      
+        <ul class="nav flex-column">
+        
+        
+        
+          <li class="col">
+			<p>
+	            <a class="nav-link active" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+	            <span data-feather="users"></span>
+	   					 Выбрать игроков
+	  			</a>
+			</p>
+          </li>
+		<div class="collapse" id="collapseExample">
+			  		<div class="card card-body">
+								<div class="overflow-visible" >
+									<div style="width: 1000px;">
+		<div class="row">
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/bc7/705_705_2/82-bolomboy-750.jpg" class="img-fluid" alt="https://cskabasket.com/upload/resize_cache/082/705_705_2/82-james-750.jpg">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="BOLOMBOY JOEL">
+							<label class="form-check-label" for="checkbox1">
+							Bolomboy  											
+							</label>
+							
+						</div>
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/915/705_705_2/82-khomenko-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="KHOMENKO ALEXANDER">
+							<label class="form-check-label" for="checkbox2">
+							Khomenko  											
+							</label>
+							
+						</div>
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/082/705_705_2/82-james-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="JAMES MIKE">
+							<label class="form-check-label" for="checkbox3">
+							James  											
+							</label>
+						</div>									 	
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/9f1/705_705_2/82-hilliard-750.jpg" class="img-fluid" alt="https://cskabasket.com/upload/resize_cache/082/705_705_2/82-james-750.jpg">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="HILLIARD DARRUN">
+							<label class="form-check-label" for="checkbox4">
+							Hilliard  											
+							</label>
+		
+						</div>
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/635/705_705_2/82-ukhov-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="UKHOV IVAN">
+							<label class="form-check-label" for="checkbox5">
+							Ukhov  											
+							</label>
+		
+						</div>
+		
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/f93/705_705_2/82-hackett-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="HACKETT DANIEL">
+							<label class="form-check-label" for="checkbox6">
+							Hackett  											
+							</label>
+						</div>									
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/bfe/705_705_2/82-antonov-750.jpg" class="img-fluid" alt="https://cskabasket.com/upload/resize_cache/082/705_705_2/82-james-750.jpg">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="ANTONOV SEMEN">
+							<label class="form-check-label" for="checkbox7">
+							Antonov  											
+							</label>
+						</div>
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/80c/705_705_2/82-strelnieks-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="STRELNIEKS JANIS">
+							<label class="form-check-label" for="checkbox8">
+							Strelnieks  											
+							</label>
+						</div>
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/a1f/705_705_2/82-clyburn-750.jpg" class="img-fluid" alt="https://cskabasket.com/upload/resize_cache/082/705_705_2/82-james-750.jpg">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="CLYBURN WILL">
+							<label class="form-check-label" for="checkbox9">
+							ClyBURN  											
+							</label>
+						</div>
+						<div class="col">
+						  	<img src="https://cskabasket.com/upload/resize_cache/bf3/705_705_2/0-shengelia-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="SHENGELIA TORNIKE">
+							<label class="form-check-label" for="checkbox10">
+							Shengelia  											
+							</label>
+						</div>
+		</div>
+											
+		<div class="row">
+			    <div class="col">
+			      	<img src="https://cskabasket.com/upload/resize_cache/331/705_705_2/82-lopatin-750.jpg" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="LOPATIN ANDREI">
+					<label class="form-check-label" for="checkbox11">
+					Lopatin  											
+					</label>
+			    </div>
+			    <div class="col">
+			      	<img src="https://cskabasket.com/upload/resize_cache/ff9/705_705_2/82-milutinov-0-750.jpg" class="img-fluid" alt="https://cskabasket.com/upload/resize_cache/082/705_705_2/82-james-750.jpg">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="MILUTINOV NIKOLA">
+					<label class="form-check-label" for="checkbox12">
+					Milutinov  											
+					</label>
+			    </div>	
+			    <div class="col">
+			      	<img src="https://cskabasket.com/upload/resize_cache/d40/705_705_2/82-kurbanov-750.jpg" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="KURBANOV NIKITA">
+					<label class="form-check-label" for="checkbox13">
+					Kurbanov  											
+					</label>
+			    </div>
+			    <div class="col">
+			      	<img src="https://cskabasket.com/upload/resize_cache/54e/705_705_2/82-voigtmann-750.jpg" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="VOIGTMANN JOHANNES">
+					<label class="form-check-label" for="checkbox14">
+					Voigtmann  											
+					</label>
+			    </div>	
+			    <div class="col">
+			    	<img src="https://cskabasket.com/upload/resize_cache/64e/705_705_2/59-holden-750.jpg" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="HOLDEN JR">
+					<label class="form-check-label" for="checkbox15">
+					Holden  											
+					</label>
+			    </div>
+		
+			    <div class="col">
+			    	<img src="https://cskabasket.com/upload/resize_cache/bb3/705_705_2/52-turkcan-750.jpg" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="TOURKCAN MIRSAD">
+					<label class="form-check-label" for="checkbox16">
+					Tourkcan  											
+					</label>`
+			    </div>
+			    <div class="col">
+			    	<img src="https://cskabasket.com/upload/resize_cache/99f/705_705_2/53-brown-130.png" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="BROWN MARCUS">
+					<label class="form-check-label" for="checkbox17">
+					Brown  											
+					</label>
+			    </div>
+			    <div class="col">
+			    	<img src="https://cskabasket.com/upload/resize_cache/f45/705_705_2/61-papaloukas-750.jpg" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="PAPALOUKAS THEODOROS">
+					<label class="form-check-label" for="checkbox17">
+					Papaloukas  											
+					</label>
+			    </div>	
+			    <div class="col">
+			    	<img src="https://cskabasket.com/upload/resize_cache/349/705_705_2/51-panov-750.jpg" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="PANOV SERGEY">
+					<label class="form-check-label" for="checkbox17">
+					Panov  											
+					</label>
+			    </div>									    							    
+			    <div class="col">
+			    	<img src="https://cskabasket.com/upload/resize_cache/3fa/705_705_2/57-savrasenko-750.jpg" class="img-fluid" alt="...">
+					<input class="form-check-input" type="checkbox" th:field="*{names}" value="SAVRASENKO ALEKSEY">
+					<label class="form-check-label" for="checkbox17">
+					Savrasenko  											
+					</label>
+			    </div>	
+		</div>
+		
+		<div class="row">
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/e2d/705_705_2/56-andersen-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="ANDERSEN DAVID">
+							<label class="form-check-label" for="checkbox17">
+							Andersen  											
+							</label>
+					    </div>		
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/abf/705_705_2/59-smodis-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="SMODIS MATJAZ">
+							<label class="form-check-label" for="checkbox17">
+							Smodis  											
+							</label>
+					    </div>	
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/530/705_705_2/59-langdon-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="LANGDON TRAJAN">
+							<label class="form-check-label" for="checkbox17">
+							Langdon  											
+							</label>
+					    </div>	
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/7ba/705_705_2/60-siskauskas-750x425.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="SISKAUSKAS RAMUNAS">
+							<label class="form-check-label" for="checkbox17">
+							Siskauskas  											
+							</label>
+					    </div>	
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/4f3/705_705_2/56-vdspiegel-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="VAN DEN SPIEGEL TOMAS">
+							<label class="form-check-label" for="checkbox17">
+							V.D.Spiegel											
+							</label>
+					    </div>	
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/627/705_705_2/79-jackson-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="JACKSON AARON">
+							<label class="form-check-label" for="checkbox17">
+							Jackson  											
+							</label>
+					    </div>	
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/46c/705_705_2/80-fridzon-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="FRIDZON VITALY">
+							<label class="form-check-label" for="checkbox17">
+							Fridzon  											
+							</label>
+					    </div>	
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/cc0/705_705_2/82-hines-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="HINES KYLE">
+							<label class="form-check-label" for="checkbox17">
+							Hines  											
+							</label>
+					    </div>	
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/a83/705_705_2/81-decolo-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="DE COLO NANDO">
+							<label class="form-check-label" for="checkbox17">
+							De Colo  											
+							</label>
+					    </div>	
+					    <div class="col">
+					    	<img src="https://cskabasket.com/upload/resize_cache/23e/705_705_2/82-vorontsevich-750.jpg" class="img-fluid" alt="...">
+							<input class="form-check-input" type="checkbox" th:field="*{names}" value="VORONTSEVICH ANDREY">
+							<label class="form-check-label" for="checkbox17">
+							Vorontsevich  											
+							</label>
+					    </div>	
+		</div>
+		<div class="row">
+		
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/088/705_705_2/79-teodosic-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="TEODOSIC MILOS">
+				<label class="form-check-label" for="checkbox17">
+				Teodosic  											
+				</label>
+		    </div>	
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/a02/705_705_2/60-shved-750x425.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="SHVED ALEXEY">
+				<label class="form-check-label" for="checkbox17">
+				Shved  											
+				</label>
+		    </div>	
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/1f2/705_705_2/77-kirilenko-r-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="KIRILENKO ANDREI">
+				<label class="form-check-label" for="checkbox17">
+				Kirilenko  											
+				</label>
+		    </div>	
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/3a8/705_705_2/80-kryapa-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="KHRYAPA VICTOR">
+				<label class="form-check-label" for="checkbox17">
+				Khryapa  											
+				</label>
+		    </div>	
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/037/705_705_2/77-kaun-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="KAUN SASHA">
+				<label class="form-check-label" for="checkbox17">
+				Kaun  											
+				</label>
+		    </div>	
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/ed8/705_705_2/81-higgins-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="HIGGINS CORY">
+				<label class="form-check-label" for="checkbox17">
+				Higgins  											
+				</label>
+		    </div>	
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/208/705_705_2/81-rodriguez-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="RODRIGUEZ SERGIO">
+				<label class="form-check-label" for="checkbox17">
+				Rodriguez  											
+				</label>
+		    </div>	
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/0e0/705_705_2/81-hunter-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="HUNTER OTHELLO">
+				<label class="form-check-label" for="checkbox17">
+				Hunter  											
+				</label>
+		    </div>
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/0e0/705_705_2/81-hunter-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="HUNTER OTHELLO">
+				<label class="form-check-label" for="checkbox17">
+				Hunter  											
+				</label>
+		    </div>
+		    <div class="col">
+		    	<img src="https://cskabasket.com/upload/resize_cache/0e0/705_705_2/81-hunter-750.jpg" class="img-fluid" alt="...">
+				<input class="form-check-input" type="checkbox" th:field="*{names}" value="HUNTER OTHELLO">
+				<label class="form-check-label" for="checkbox17">
+				Hunter  											
+				</label>
+		    </div>									
+		</div>
+									</div>
+									
+								</div>  
+					</div>
+		</div>
+		
+		
+		
+<li class="col">		
+			<p>
+	            <a class="nav-link active" data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
+	            <span data-feather="calendar"></span>
+	   					 Выбрать даты
+	  			</a>
+			</p>
+</li>
+<div class="collapse" id="collapseExample3">
+	<div class="container pt-1">
+	
+	
+		<label>С даты:</label>
+		<section class="range-slider">
+  <span class="rangeValues"></span>
+  <input value="1" min="1" max="9" step="1" type="range" th:field="*{fromDate}">
+  <input value="9" min="1" max="9" step="1" type="range" th:field="*{toDate}">
+</section>
+<span th:if="${#fields.hasErrors('fromDate')}" th:errors="*{fromDate}"></span>
+<span th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></span>   
+	</div>
+</div>		
+		
+		
+		
+		        
+        
+          <li class="col">
+			<p>
+	            <a class="nav-link active" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
+	            <span data-feather="bar-chart-2"></span>
+	   					 Выбрать графу статистики
+	  			</a>
+			</p>
+          </li>
+		<div class="collapse" id="collapseExample2">
+			<div class="p-3">
+				<select id="column" name="column" class="form-select" aria-label="Default select example">
+					<option value="getTimePlayed">Сыгранное время</option>
+					<option value="getScore">Очки</option>
+					<option value="getShots2">2-очковые броски</option>
+					<option value="getScored2">2-очковые в цель</option>
+					<option value="getShots3">3-очковые броски</option>
+					<option value="getScored3">3-очковые в цель</option>
+					<option value="getShots1">Штрафных бросил</option>
+					<option value="getScored1">Штрафных забил</option>
+					<option value="getReboundsDefensive">Подборы в защите</option>
+					<option value="getReboundsOffensive">Подборы в нападении</option>
+					<option value="getRebounds">Подборы всего</option>
+					<option value="getPasses">Голевые пасы</option>
+					<option value="getInterceptions">Перехваты</option>
+					<option value="getTurnovers">Потери</option>
+					<option value="getBlocks">Блокшоты</option>
+					<option value="getBlocked">Блокшотов получено</option>
+					<option value="getFouls">Фолы</option>
+					<option value="getFouled">Заработал фолов</option>
+					<option value="getIndex">Индекс полезности</option>	
+					<option value="getShots2Accuracy">Точность двухочковых</option>	
+					<option value="getShots3Accuracy">Точность трёхочковых</option>		
+					<option value="getShots1Accuracy">Точность штрафных</option>					
+				</select>
+			</div>
+			<div class="p-3">
+				<div class="form-check form-switch">
+					<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" th:field="*{showAverage}">
+					<label class="form-check-label" for="flexSwitchCheckDefault">Показать средние значения</label>
+				</div>
+			</div>
+		</div>
+
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+          <li class="nav-item">
+          <div data-bs-toggle="tooltip" data-bs-placement="top" title="Выбрать название для сохранения и дальнейшего быстрого вызова">
+            <a class="nav-link active" data-bs-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample" >
+              <span data-feather="file"></span>
+              Сохранить как...
+            </a>
+            </div>
+          </li>
+		<div class="collapse" id="collapseExample4">
+			<div class="input-group p-3">
+					<span class="input-group-text" id="basic-addon1">></span>
+					<input type="text" class="form-control" placeholder="Сохранить как..." aria-label="Username" aria-describedby="basic-addon1" data-bs-toggle="tooltip" th:field="*{playerStatDateName}">
+			</div>
+		</div>		
+
+        </ul>
+		<button id="buttons1" type="submit" class="btn btn-primary btn-sm">Go</button>
+ </form>
+        
+        
+        
+        
+        
+        <hr>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample8" aria-label="Add a new report" aria-expanded="false">
+              <span data-feather="file-text"></span>
+              Загрузить...
+            </a>
+          </li>
+            <div class="collapse p-3" id="collapseExample8">
+				<form th:action="@{/statsfromdbcommit}" th:object="${PlayerStatDate}" method="POST">
+				
+						<select class="form-select" aria-label="Default select example" th:field="*{playerStatDateId}">
+								<option th:each="uss : ${usslist}"
+										th:value="${uss.playerStatDateId}"						
+										th:text="${uss.playerStatDateName}">
+								</option>
+						</select>
+						<br>
+        <div class="container">
+
+  <button id="buttons2" type="submit" class="btn btn-primary btn-sm">Загрузить</button>
+</div>						
+				</form>
+			</div>
+        </ul>
+      </div>
+    </nav>
+
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2><p th:text="${statsName}"></p></h2>
+      </div>
+		<div id="container2">
+			<script>
+				var statsName = "[[${statsName}]]";
+				var countList = "[[${countList}]]";
+				var datesList = "[[${datesList}]]";
+				var statsList = "[[${statsList}]]";
+				var playersCommited = "[[${playersCommited}]]";
+				var showAverage = "[[${showAverage}]]";
+			</script>
+		</div>
+			<script type="text/javascript" th:src="@{js/xychart.js}"></script>
+    </main>
+  </div>
+</div>
+    <script type="text/javascript" th:src="@{js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{js/dashboard.js}"></script>
+    <script th:src="@{js/range.js}"></script>
+	<script src="//www.amcharts.com/lib/4/themes/animated.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script th:src="@{js/dashboard.js}"></script>  
+    
+  </body>
+</html>

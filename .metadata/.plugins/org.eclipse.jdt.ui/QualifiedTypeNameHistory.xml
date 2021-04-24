@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="javax.persistence.Entity"/>
+    <fullyQualifiedTypeName name="javax.persistence.Table"/>
+    <fullyQualifiedTypeName name="javax.persistence.Transient"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="org.springframework.data.repository.PagingAndSortingRepository"/>
+    <fullyQualifiedTypeName name="antlr.collections.List"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="eurostat.dto.PlayerStatDateRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
+    <fullyQualifiedTypeName name="eurostat.controllers.PlayersController"/>
+    <fullyQualifiedTypeName name="eurostat.services.GameDataService"/>
+    <fullyQualifiedTypeName name="eurostat.services.PlayerStatDateService"/>
+    <fullyQualifiedTypeName name="eurostat.dao.PlayerStatDate"/>
+    <fullyQualifiedTypeName name="eurostat.dto.AuthorityRepository"/>
+    <fullyQualifiedTypeName name="eurostat.services.AuthService"/>
+    <fullyQualifiedTypeName name="eurostat.services.UserAccountService"/>
+</qualifiedTypeNameHistroy>

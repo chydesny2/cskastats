@@ -1,0 +1,26 @@
+package eurostat.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import eurostat.dao.PlayerStatDate;
+import eurostat.dto.PlayerStatDateRepository;
+
+public class PlayerStatDateService {
+	
+	@Autowired
+	public PlayerStatDateRepository PRepo;
+	
+	public List<PlayerStatDate> findByUserName(String userName)
+	{
+		return PRepo.findByUserName(userName);
+	}
+	
+	
+	public PlayerStatDate findByPlayerStatDateId(long playerStatDateId)
+	{
+		return findByPlayerStatDateId(playerStatDateId);
+	}
+
+}

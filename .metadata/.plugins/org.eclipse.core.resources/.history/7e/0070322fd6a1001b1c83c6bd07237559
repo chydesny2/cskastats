@@ -1,0 +1,17 @@
+package eurostat.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import eurostat.dto.UserAccountRepository;
+import eurostat.entities.UserAccount;
+
+public class UserAccountService {
+	@Autowired 
+	UserAccountRepository URepo;
+	
+	List<UserAccount> findAll() {
+		return URepo.findAll();
+	}
+}

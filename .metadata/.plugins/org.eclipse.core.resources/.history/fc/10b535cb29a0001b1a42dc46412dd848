@@ -1,0 +1,32 @@
+package eurostat.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import eurostat.dao.GameConvertedRepository;
+import eurostat.dao.PlayerStatDate;
+import eurostat.entities.GameConverted;
+
+@Service
+public class GamesDataService {
+
+	@Autowired
+	private GameConvertedRepository GRepo;
+	
+	public List<GameConverted> findAll(){
+		return GRepo.findAll();
+	}
+	
+	public List<GameConverted> findAll(Sort sort){
+		return GRepo.findAll(sort);
+	}
+
+	public void prepareData(Model model, PlayerStatDate playerStatDate) {
+		
+	}
+
+}
